@@ -3,7 +3,7 @@
 A game where the player(s) add a caption to a randomly provided giphy image, funny or smart, to a giphy image.
 
 ## Wireframes
-![alt text](https://git.generalassemb.ly/Yamil/Project-2/blob/master/DSC_0017.JPG)
+![alt text](https://git.generalassemb.ly/Yamil/Project-2/blob/master/wireframes.JPG)
 
 ## PsuedoCode
 * Enter a name before starting the game (else one is given by default).
