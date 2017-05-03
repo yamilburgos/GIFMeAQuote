@@ -1,11 +1,11 @@
-#Project 2 GIF Me A Laugh
+# Project 2 GIF Me A Laugh
 -----------------------
 A game where the player(s) add a caption to a randomly provided giphy image, funny or smart, to a giphy image.
 
-##Wireframes
-checkout [this](https://webdesign.tutsplus.com/articles/a-beginners-guide-to-wireframing--webdesign-7399) resource for some ideas about wireframing and some good tools that might help.
+## Wireframes
+![alt text](https://git.generalassemb.ly/Yamil/Project-2/blob/master/DSC_0017.JPG)
 
-##PsuedoCode
+## PsuedoCode
 * Enter a name before starting the game (else one is given by default).
 * Player must type in the textbox which will be saved as a string when submitted.
 * Player must then wait for all other Players to finish their submissions.
@@ -14,10 +14,10 @@ checkout [this](https://webdesign.tutsplus.com/articles/a-beginners-guide-to-wir
 * Once votes are all assigned, show the round results with the vote points given out.
 * Player is finally given an option to either continue playing or start fresh (Keep part of the database entries or erase all of it).
 
-##Database Table
+## Database Table
 
-ID === SERIAL PRIMARYKEY 	</br>
-NAME === VARCHAR				</br>
+ID === SERIAL PRIMARYKEY 		</br>
+NAME === VARCHAR			</br>
 CAPTION === VARCHAR			</br>
 VOTES === INTEGER			</br>
 TOTAL === INTEGER			</br>
@@ -30,7 +30,7 @@ POSTED === BOOLEAN			</br>
 |  3 | Cathy  | Shaken not stirred     |   0   |   1   |  True  |
 |  4 | Kris   | Come on Snake Eyes!    |   1   |   2   |  False |
 
-##User Stories
+## User Stories
 * As a user I like to be able to hide my working caption from others.
 * As a user I like to be able to see what player I am.
 * As a user I like to have a random image displayed everytime I play.
@@ -39,7 +39,7 @@ POSTED === BOOLEAN			</br>
 * As a user I like to see my points from voting this round and in total.
 * As a user I like to have the option to play again or start over.		
 
-##Technologies used/npm Modules
+## Technologies used/npm Modules
 * HTML, CSS & Javascript - Building blocks used to create GIF Me A Lab using style and logic.
 
 * Giphy API - Natively embed all the best features of the world's largest and most powerful GIF library into your app.
