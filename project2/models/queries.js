@@ -3,15 +3,19 @@ var options = { promiseLib: promise };
 var pgp = require("pg-promise")(options);
 var axios = require("axios");
 
-var connectionString = "postgres://localhost:5432/contacts_db";
+var connectionString = "postgres://localhost:5432/gamegiphy";
 var db = pgp(connectionString);
 
+/* select * from players INNER JOIN status on (players.id = status.player_id); */
 
 function getGiphyImage(req, res, next) {
     axios.get("http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC")
         .then((response) => {
             res.locals.gifUrl = response.data.data.image_url;
-            console.log(res.locals.gifUrl);
+            console.log("MEDIA QUERY:", res.locals.gifUrl);
+
+            db.none("insert into giphyURL(url)" + "select $1" + "where not exists (select 1 from giphyURL where id = 1)", res.locals.gifUrl);
+
             return next();
         }).catch((err) => {
             console.log(err);
