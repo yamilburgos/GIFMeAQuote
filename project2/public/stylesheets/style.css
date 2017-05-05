@@ -22,6 +22,10 @@ h1 {
     width: 70%;
 }
 
+#captionBox {
+    width: 800px;
+}
+
 .button {
     background-color: gray;
     color: white;

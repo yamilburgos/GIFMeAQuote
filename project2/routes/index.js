@@ -1,55 +1,37 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-
-var db = require('../models/queries');
-var axios = require('axios');
+var db = require("../models/queries");
 
 // Figure out code to have the browser wait for other people after a button click for several pages.
 // >>> This will be for: Index, Entry, Vote & Results.
 
-// Then create a transition ejs page after entry to display all of the captions for a set amount of time.
+// Then create a transition ejs page after entry to display all of the captions for a set amount
+// of time.
 
-// Also create a transition ejs page after vote to show which caption gained votes and what player gained points, similar to first transition.
+// Also create a transition ejs page after vote to show which caption gained votes and what player
+// gained points, similar to first transition.
 
-var title = 'GIF Me A Laugh!';
-
-router.get('/', function(req, res, next) {
-    res.render('index', { title: title });
+router.get("/", function(req, res) {
+    res.render("index");
 });
 
-function apiCall(req, response, next) {
-    axios.get(`http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC`)
-        .then((res) => {
-            response.locals.gifUrl = res.data.data.image_url;
-            console.log(response.locals.gifUrl);
-            return next();
-        }).catch((err) => {
-            console.log(err);
-        })
-};
-
-router.get('/entry', apiCall, (req, res, next) => {
-    res.render('entry', {
-        title: title,
+router.get("/entry", db.getGIPHYImage, function(req, res) {
+    res.render("entry", {
         gifUrl: res.locals.gifUrl
-    })
+    });
 });
 
-router.get('/vote', function(req, res, next) {
-    console.log("What about this?");
-    res.render('vote', { title: title });
+router.get("/vote", function(req, res) {
+    res.render("vote");
 });
 
-router.get('/results', function(req, res, next) {
-    console.log("And Finally this?");
-    res.render('results', { title: title });
+router.get("/results", function(req, res) {
+    res.render("results");
 });
 
-router.post('/entry', db.apiCall);
-
-router.get('/', db.getAllContacts);
-router.post('/', db.createContact);
-router.delete('/:id', db.removeContact);
-router.patch('/:id', db.updateContact);
+router.get("/", db.getAllCaptions);
+router.post("/", db.createCaption);
+router.delete("/:id", db.removeCaption);
+router.patch("/:id", db.updateSomething);
 
 module.exports = router;
