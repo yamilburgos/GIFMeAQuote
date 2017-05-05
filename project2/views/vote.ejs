@@ -1,53 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
+<% include ./partials/head %>
 
-    <img src="https://placehold.it/350x150" alt="giphy!" height="300" width="300">
-    <br>
+    <body>
+        <h1>
+            <%= title %>
+        </h1>
 
-    <form action="./results">
-    <ul>
-      <li>
-        <p>Player Caption Entry</p>
-        <input type="submit" value="Vote!">
-      </li>
-      <li>
-        <p>Player Caption Entry</p>
-        <input type="submit" value="Vote!">
-      </li>
-      <li>
-        <p>Player Caption Entry</p>
-        <input type="submit" value="Vote!">
-      </li>
-      <li>
-        <p>Player Caption Entry</p>
-        <input type="submit" value="Vote!">
-      </li>
-    </ul>
-    </form>
+        <img src="https://placehold.it/350x150" alt="giphy!" height="300" width="300">
+        <br>
 
-    <ul>
-      <li>
-        <p>Player 1</p>
-        <p>Voted!</p>
-      </li>
-      <li>
-        <p>Player 2</p>
-        <p>Voting...</p>
-      </li>
-      <li>
-        <p>Player 3</p>
-        <p>Voting...</p>
-      </li>
-      <li>
-        <p>Player 4</p>
-        <p>Voted!</p>
-      </li>
-    </ul>
-  </body>
+        <form action="./results">
+            <ul>
+                <li>
+                    <p>Player Caption Entry</p>
+                    <input type="submit" value="Vote!">
+                </li>
+                <li>
+                    <p>Player Caption Entry</p>
+                    <input type="submit" value="Vote!">
+                </li>
+                <li>
+                    <p>Player Caption Entry</p>
+                    <input type="submit" value="Vote!">
+                </li>
+                <li>
+                    <p>Player Caption Entry</p>
+                    <input type="submit" value="Vote!">
+                </li>
+            </ul>
+        </form>
+
+        <ul>
+            <li>
+                <p>Player 1</p>
+                <p>Voted!</p>
+            </li>
+            <li>
+                <p>Player 2</p>
+                <p>Voting...</p>
+            </li>
+            <li>
+                <p>Player 3</p>
+                <p>Voting...</p>
+            </li>
+            <li>
+                <p>Player 4</p>
+                <p>Voted!</p>
+            </li>
+        </ul>
+
+        <% include ./partials/scripts %>
+    </body>
+
 </html>

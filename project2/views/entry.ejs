@@ -1,43 +1,39 @@
 <!DOCTYPE html>
 <html>
+<% include ./partials/head %>
 
-<head>
-    <title>
-        <%= title %>
-    </title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-</head>
+    <body>
+        <h1>
+            <%= title %>
+        </h1>
+        <img src="<%= gifUrl %>" alt="giphy! " height="300 " width="300 ">
+        <br>
+        <input name="playerCaption" placeholder="Type your caption here">
 
-<body>
-    <h1>
-        <%= title %>
-    </h1>
-    <img src="<%= gifUrl %>" alt="giphy! " height="300 " width="300 ">
-    <br>
-    <input name="playerCaption" placeholder="Type your caption here">
+        <form action="./vote ">
+            <input type="submit" value="Submit">
+        </form>
 
-    <form action="./vote ">
-        <input type="submit" value="Submit">
-    </form>
+        <ul>
+            <li>
+                <p>Player 1</p>
+                <p>Ready!</p>
+            </li>
+            <li>
+                <p>Player 2</p>
+                <p>Writing...</p>
+            </li>
+            <li>
+                <p>Player 3</p>
+                <p>Writing...</p>
+            </li>
+            <li>
+                <p>Player 4</p>
+                <p>Ready!</p>
+            </li>
+        </ul>
 
-    <ul>
-        <li>
-            <p>Player 1</p>
-            <p>Ready!</p>
-        </li>
-        <li>
-            <p>Player 2</p>
-            <p>Writing...</p>
-        </li>
-        <li>
-            <p>Player 3</p>
-            <p>Writing...</p>
-        </li>
-        <li>
-            <p>Player 4</p>
-            <p>Ready!</p>
-        </li>
-    </ul>
-</body>
+        <% include ./partials/scripts %>
+    </body>
 
 </html>

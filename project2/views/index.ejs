@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Player <input name="playerName" placeholder="Name"></p>
-    <form action="./entry">
-	    <input type="submit" value="Start Game">
-    </form>
-  </body>
+<% include ./partials/head %>
+
+    <body>
+        <h1>
+            <%= title %>
+        </h1>
+        <p>Player <input name="playerName" placeholder="Name"></p>
+        <form action="./entry">
+            <input type="submit" value="Start Game">
+        </form>
+
+        <% include ./partials/scripts %>
+    </body>
+
 </html>
