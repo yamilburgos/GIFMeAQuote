@@ -6,8 +6,6 @@ var pgp = require('pg-promise')(options);
 var connectionString = 'postgres://localhost:5432/contacts_db';
 var db = pgp(connectionString);
 
-//var url = `http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC`
-
 function apiCall(req, res, next) {
     console.log('apiCall() is awake');
     axios.get(`http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC`)

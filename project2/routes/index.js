@@ -16,36 +16,23 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: title });
 });
 
-
 function apiCall(req, response, next) {
-    // console.log('apiCall() is awake');
     axios.get(`http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC`)
         .then((res) => {
-            response.locals.gifUrl = res.data.data.url;
+            response.locals.gifUrl = res.data.data.image_url;
             console.log(response.locals.gifUrl);
-            // res.locals.thenCall = res.data.data.url;
-            // console.log(res.locals.thenCall);
             return next();
         }).catch((err) => {
             console.log(err);
         })
 };
 
-
 router.get('/entry', apiCall, (req, res, next) => {
     res.render('entry', {
-            title: title,
-            gifUrl: res.locals.gifUrl
-        })
-        // var thenCall = res.data.data.url;
-        // console.log(thenCall);
-        // return thenCall;
+        title: title,
+        gifUrl: res.locals.gifUrl
+    })
 });
-// console.log("entry alive!");
-
-// }).post((res) => {
-//     db.apiCall();
-
 
 router.get('/vote', function(req, res, next) {
     console.log("What about this?");
@@ -57,12 +44,10 @@ router.get('/results', function(req, res, next) {
     res.render('results', { title: title });
 });
 
-
 router.get('/', db.getAllContacts);
 router.post('/', db.createContact);
 router.post('/entry', db.apiCall);
 router.delete('/:id', db.removeContact);
 router.patch('/:id', db.updateContact);
-
 
 module.exports = router;
