@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+
 var db = require('../models/queries');
 var axios = require('axios');
 
@@ -44,9 +45,10 @@ router.get('/results', function(req, res, next) {
     res.render('results', { title: title });
 });
 
+router.post('/entry', db.apiCall);
+
 router.get('/', db.getAllContacts);
 router.post('/', db.createContact);
-router.post('/entry', db.apiCall);
 router.delete('/:id', db.removeContact);
 router.patch('/:id', db.updateContact);
 

@@ -6,10 +6,12 @@
         <h1>
             <%= title %>
         </h1>
-        <p>Player <input name="playerName" placeholder="Name"></p>
-        <form action="./entry">
-            <input type="submit" value="Start Game">
-        </form>
+        <span id='titleMenu'>
+            <form action="./entry">
+            <p class="playerName">Player <input name="playerName" id="startBox" placeholder="Name"></p>
+            <br> <input type="submit" class="button" value="Start Game">
+            </form>
+        </span>
 
         <% include ./partials/scripts %>
     </body>

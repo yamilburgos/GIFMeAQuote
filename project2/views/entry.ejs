@@ -6,13 +6,15 @@
         <h1>
             <%= title %>
         </h1>
-        <img src="<%= gifUrl %>" alt="giphy! " height="300 " width="300 ">
+        <img src="<%= gifUrl %>" alt="giphy!">
         <br>
-        <input name="playerCaption" placeholder="Type your caption here">
 
+        <span id='gameMenu'>
         <form action="./vote ">
-            <input type="submit" value="Submit">
+            <p><input name="playerCaption" id="captionBox" placeholder="Type your caption here"></p>
+            <br> <input type="submit" class="button" value="Submit Caption">
         </form>
+        </span>
 
         <ul>
             <li>
