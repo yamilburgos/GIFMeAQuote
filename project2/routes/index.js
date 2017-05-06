@@ -15,7 +15,9 @@ router.get("/", function(req, res) {
     res.render("index");
 });
 
-router.get("/entry", db.getGIPHYImage, function(req, res) {
+router.get("/entry", db.getNewImage, function(req, res) {
+    console.log("RETURNING", res.locals.gifUrl);
+
     res.render("entry", {
         gifUrl: res.locals.gifUrl
     });
@@ -26,6 +28,7 @@ router.get("/vote", function(req, res) {
 });
 
 router.get("/results", function(req, res) {
+    db.resetImage();
     res.render("results");
 });
 

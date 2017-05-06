@@ -8,18 +8,37 @@ var db = pgp(connectionString);
 
 /* select * from players INNER JOIN status on (players.id = status.player_id); */
 
-function getGiphyImage(req, res, next) {
+function grabNewGiphyImage(req, res, next) {
     axios.get("http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC")
         .then((response) => {
+            db.none("insert into giphyURL(url)" + "select $1" + "where not exists (select 1 from giphyURL where id = 1)",
+                response.data.data.image_url);
+
+            console.log("THIS WAS CALLED TO DO SOMETHING!");
             res.locals.gifUrl = response.data.data.image_url;
-            console.log("MEDIA QUERY:", res.locals.gifUrl);
-
-            db.none("insert into giphyURL(url)" + "select $1" + "where not exists (select 1 from giphyURL where id = 1)", res.locals.gifUrl);
-
+            console.log("URLLLL:", res.locals.gifUrl);
             return next();
+
         }).catch((err) => {
             console.log(err);
         });
+}
+
+function getNewImage(req, res, next) {
+    db.any("select * from giphyURL where id = 1").then(function(info) {
+        if (info[0] === undefined) {
+            grabNewGiphyImage(req, res, next);
+            return this;
+        }
+
+        res.locals.gifUrl = info[0].url;
+        console.log("FINAL QUERY:", res.locals.gifUrl);
+        return next();
+    });
+}
+
+function resetImage() {
+    db.none("truncate table giphyURL restart identity");
 }
 
 function createCaption(req, res) {
@@ -46,7 +65,8 @@ function updateSomething(req, res) {
 }
 
 module.exports = {
-    getGIPHYImage: getGiphyImage,
+    getNewImage: getNewImage,
+    resetImage: resetImage,
 
     createCaption: createCaption,
     getAllCaptions: getAllCaptions,
