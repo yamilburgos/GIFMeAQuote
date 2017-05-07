@@ -3,10 +3,8 @@ var options = { promiseLib: promise };
 var pgp = require("pg-promise")(options);
 var axios = require("axios");
 
-var connectionString = "postgres://localhost:5432/gamegiphy";
+var connectionString = process.env.DATABASE_URL;
 var db = pgp(connectionString);
-
-var counter = 1;
 
 /* select * from players INNER JOIN status on (players.id = status.player_id); */
 
@@ -15,10 +13,7 @@ function grabNewGiphyImage(req, res, next) {
         .then((response) => {
             db.none("insert into giphyURL(url)" + "select $1" + "where not exists (select 1 from giphyURL where id = 1)",
                 response.data.data.image_url);
-
-            console.log("THIS WAS CALLED TO DO SOMETHING!");
             res.locals.gifUrl = response.data.data.image_url;
-            console.log("URLLLL:", res.locals.gifUrl);
             return next();
 
         }).catch((err) => {
@@ -38,33 +33,47 @@ function getNewImage(req, res, next) {
     });
 }
 
-function displayName(req, res, next) {
-    if (req.query.playerName === "" || req.query.playerName === undefined) {
-        req.query.playerName = 'Lazy Player';
-    }
-
-    console.log("COUNTER:", counter);
-    if (counter < 4) {
-        console.log("CHECKING THIS:", req.query.playerName, counter);
-
-        counter++;
-        insertName(req, res, next);
-        //return next();
-    }
-
-    db.any("select * from players").then(function(info) {
-        res.locals.player1Name = (info[0] === undefined) ? "Not Ready" : info[0].name;
-        res.locals.player2Name = (info[1] === undefined) ? "Not Ready" : info[1].name;
-        res.locals.player3Name = (info[2] === undefined) ? "Not Ready" : info[2].name;
-        res.locals.player4Name = (info[3] === undefined) ? "Not Ready" : info[3].name;
-
+function getImage(req, res, next) {
+    db.any("select * from giphyURL where id = 1").then(function(info) {
+        res.locals.gifUrl = info[0].url;
         return next();
     });
 }
 
+function getQuote(req, res, next) {
+    db.any("SELECT a.name, c.sentence FROM author a LEFT JOIN caption c ON c.id = a.id").then(function(info) {
+        console.log("Let's go:", info);
+        res.locals.authorName = info[0].name;
+        res.locals.captionName = info[0].sentence;
+        return next();
+    });
+}
+
+function displayName(req, res, next) {
+    if (req.query.author === "" || req.query.author === undefined) {
+        req.query.author = 'Anon';
+    }
+
+    console.log("CHECKING THIS:", req.query.author);
+    res.locals.authorName = req.query.author;
+
+    db.none("insert into author(name)" + "values($1)", req.query.author).then(function(data) {
+        console.log(data);
+        return next();
+    });
+    //  insertName(req, res, next);
+    //return next();
+    //  }
+
+    // db.any("select * from author").then(function(info) {
+    //     res.locals.authorName = (info[0] === undefined) ? "Not Ready" : info[0].name;
+    //     return next();
+    // });
+}
+
 function insertName(req, res, next) {
     console.log(req.query.playerName);
-    db.none("insert into players(name)" + "values($1)", req.query.playerName).then(res.redirect("/"));
+    db.none("insert into players(name)" + "values($1)", req.query.authorName).then(res.redirect("/"));
 }
 
 function resetImage() {
@@ -72,26 +81,28 @@ function resetImage() {
 }
 
 function resetNames() {
-    db.result("truncate players restart identity CASCADE");
-    counter = 1;
+    db.result("truncate author, caption restart identity CASCADE");
 }
 
-// db.any("select * from players").then(function(info) {
-//     console.log("ALL INFO:", info);
+function displayCaption(req, res, next) {
+    if (req.query.caption === "" || req.query.caption === undefined) {
+        req.query.caption = 'Drawing a blank here';
+    }
 
-//     // for (var i = 0; i < 4; i++) {
-//     //   if (info[i] === undefined) {
-//     //    getName(req, res, next, i);
-//     //         return this;
-//     //    }
-//     //  }
+    console.log("CHECKING THIS:", req.query.caption);
 
+    db.none("insert into caption(sentence)" + "values($1)", req.query.caption).then(function(data) {
+        console.log(data);
+        return next();
+    });
+}
 
-//     return next();
-// }).catch((err) => {
-//     console.log(err);
-// });
-// }
+function callQuote(req, res) {
+    db.any("SELECT * FROM authors INNER JOIN caption ON (authors.id = caption.author_id)").then(function(info) {
+
+        console.log("INFO:", info);
+    });
+}
 
 function createCaption(req, res) {
     req.body.age = parseInt(req.body.age);
@@ -120,11 +131,12 @@ module.exports = {
     getNewImage: getNewImage,
     resetImage: resetImage,
 
+    getImage: getImage,
+    getQuote: getQuote,
+    displayCaption: displayCaption,
+
     displayName: displayName,
     resetNames: resetNames,
 
-    createCaption: createCaption,
-    getAllCaptions: getAllCaptions,
-    removeCaption: removeCaption,
-    updateSomething: updateSomething
+    callQuote: callQuote
 };

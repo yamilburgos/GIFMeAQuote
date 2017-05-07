@@ -3,34 +3,16 @@
 <% include ./partials/head %>
 
     <body>
-        <p>Round Results</p>
+        <img src="<%= gifUrl %>" alt="giphy!">
+        <br>
 
-        <form action="./">
-            <input type="submit" value="End Game">
-        </form>
-
-        <ul>
-            <li>
-                <p>Ranking: 1st</p>
-                <p>Player 1</p>
-                <p>Votes: 1</p>
-            </li>
-            <li>
-                <p>Ranking: 2nd</p>
-                <p>Player 2</p>
-                <p>Votes: 1</p>
-            </li>
-            <li>
-                <p>Ranking: 3rd</p>
-                <p>Player 3</p>
-                <p>Votes: 1</p>
-            </li>
-            <li>
-                <p>Ranking: 4th</p>
-                <p>Player 4</p>
-                <p>Votes: 1</p>
-            </li>
-        </ul>
+        <span class='mainMenu'>
+            <form action="./">
+                <p><%=captionName %></p>
+                <br> <p>by <%=authorName %></p>
+                <br> <input type="submit" class="button" value="Start New Session"> 
+            </form>
+        </span>
 
         <% include ./partials/scripts %>
     </body>

@@ -6,21 +6,13 @@
         <img src="<%= gifUrl %>" alt="giphy!">
         <br>
 
-        <span id='gameMenu'>
-        <form action="./results ">
-            <p><input name="playerCaption" id="captionBox" placeholder="Type your caption here"></p>
-            <br> <input type="submit" class="button" value="Submit Caption">
-        </form>
+        <span class='mainMenu'>
+            <form action="./results ">
+                <p><input name="caption" id="captionBox" placeholder="Type your caption here"></p>
+                <p> by <%=authorName %> </p>
+                <br> <input type="submit" class="button" value="Submit Caption">
+            </form>
         </span>
-
-        <ul>
-            <li>
-                <p>
-                    <%=player1Name %>
-                </p>
-                <p>Ready!</p>
-            </li>
-        </ul>
 
         <% include ./partials/scripts %>
     </body>

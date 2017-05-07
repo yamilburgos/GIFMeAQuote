@@ -15,10 +15,11 @@ h1 {
 }
 
 #startBox {
-    width: 70%;
+    width: 90%;
 }
 
 #captionBox {
+    margin-top: 50px;
     width: 800px;
 }
 
@@ -43,7 +44,7 @@ img {
 }
 
 #titleMenu,
-#gameMenu {
+.mainMenu {
     height: 350px;
     display: flex;
     align-items: center;
@@ -51,6 +52,6 @@ img {
     text-align: center;
 }
 
-#gameMenu {
+.mainMenu {
     height: 120px;
 }

@@ -39,8 +39,6 @@ INSERT INTO caption(sentence)
     ('Pl 4');
 
 /*
-SELECT id, name, sentence FROM authors INNER JOIN caption ON (authors.id = caption.author_id);
-
 INSERT INTO quote (name, sentence)
 SELECT a.name, c.sentence
 FROM author a
