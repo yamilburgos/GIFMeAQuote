@@ -1,26 +1,22 @@
-DROP DATABASE IF EXISTS gamegiphy;
-CREATE DATABASE gamegiphy;
+DROP DATABASE IF EXISTS giphyquotes;
+CREATE DATABASE giphyquotes;
 
-\c gamegiphy;
+\c giphyquotes;
 
-CREATE TABLE players (
+CREATE TABLE author (
 	ID SERIAL PRIMARY KEY,
 	Name TEXT
 );
 
 CREATE TABLE caption (
-    Player_ID INTEGER REFERENCES players (ID),
+    ID SERIAL PRIMARY KEY,
 	Sentence TEXT
 );
 
-CREATE TABLE status (
-    Player_ID INTEGER REFERENCES players (ID),
-	Posted BOOLEAN
-);
-
-CREATE TABLE points (
-    Player_ID INTEGER REFERENCES players (ID),
-	Votes INTEGER
+CREATE TABLE quote (
+    ID SERIAL PRIMARY KEY,
+    Name TEXT,
+	Sentence TEXT
 );
 
 CREATE TABLE giphyURL (
@@ -28,23 +24,25 @@ CREATE TABLE giphyURL (
 	Url TEXT
 );
 
--- INSERT INTO players (name, caption)
--- 	VALUES
---     ('Player 1', ' '),
---     ('Player 2', ' '),
---     ('Player 3', ' '),
---     ('Player 4', ' ');
+INSERT INTO author(name)
+	VALUES
+    ('Player 1'),
+    ('Player 2'),
+    ('Player 3'),
+    ('Player 4');
 
--- INSERT INTO status (player_id, posted)
--- 	VALUES
---     (1, false),
--- 	(2, false),
--- 	(3, false),
---     (4, false);
+INSERT INTO caption(sentence)
+	VALUES
+    ('Pl 1'),
+    ('Pl 2'),
+    ('Pl 3'),
+    ('Pl 4');
 
--- INSERT INTO points (player_id, votes, total)
--- 	VALUES
---     (1, 0,0),
--- 	(2, 0,0),
--- 	(3, 0,0),
---     (4, 0,0);
+/*
+SELECT id, name, sentence FROM authors INNER JOIN caption ON (authors.id = caption.author_id);
+
+INSERT INTO quote (name, sentence)
+SELECT a.name, c.sentence
+FROM author a
+LEFT JOIN caption c ON c.id = a.id;
+*/
