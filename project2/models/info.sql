@@ -5,8 +5,12 @@ CREATE DATABASE gamegiphy;
 
 CREATE TABLE players (
 	ID SERIAL PRIMARY KEY,
-	Name TEXT,
-	Caption TEXT
+	Name TEXT
+);
+
+CREATE TABLE caption (
+    Player_ID INTEGER REFERENCES players (ID),
+	Sentence TEXT
 );
 
 CREATE TABLE status (
@@ -16,8 +20,7 @@ CREATE TABLE status (
 
 CREATE TABLE points (
     Player_ID INTEGER REFERENCES players (ID),
-	Votes INTEGER,
-	Total INTEGER
+	Votes INTEGER
 );
 
 CREATE TABLE giphyURL (
@@ -25,23 +28,23 @@ CREATE TABLE giphyURL (
 	Url TEXT
 );
 
-INSERT INTO players (name, caption)
-	VALUES
-    ('Player 1', ' '),
-    ('Player 2', ' '),
-    ('Player 3', ' '),
-    ('Player 4', ' ');
+-- INSERT INTO players (name, caption)
+-- 	VALUES
+--     ('Player 1', ' '),
+--     ('Player 2', ' '),
+--     ('Player 3', ' '),
+--     ('Player 4', ' ');
 
-INSERT INTO status (player_id, posted)
-	VALUES
-    (1, false),
-	(2, false),
-	(3, false),
-    (4, false);
+-- INSERT INTO status (player_id, posted)
+-- 	VALUES
+--     (1, false),
+-- 	(2, false),
+-- 	(3, false),
+--     (4, false);
 
-INSERT INTO points (player_id, votes, total)
-	VALUES
-    (1, 0,0),
-	(2, 0,0),
-	(3, 0,0),
-    (4, 0,0);
+-- INSERT INTO points (player_id, votes, total)
+-- 	VALUES
+--     (1, 0,0),
+-- 	(2, 0,0),
+-- 	(3, 0,0),
+--     (4, 0,0);

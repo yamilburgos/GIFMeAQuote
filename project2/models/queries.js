@@ -6,6 +6,8 @@ var axios = require("axios");
 var connectionString = "postgres://localhost:5432/gamegiphy";
 var db = pgp(connectionString);
 
+var counter = 1;
+
 /* select * from players INNER JOIN status on (players.id = status.player_id); */
 
 function grabNewGiphyImage(req, res, next) {
@@ -32,14 +34,64 @@ function getNewImage(req, res, next) {
         }
 
         res.locals.gifUrl = info[0].url;
-        console.log("FINAL QUERY:", res.locals.gifUrl);
         return next();
     });
+}
+
+function displayName(req, res, next) {
+    if (req.query.playerName === "" || req.query.playerName === undefined) {
+        req.query.playerName = 'Lazy Player';
+    }
+
+    console.log("COUNTER:", counter);
+    if (counter < 4) {
+        console.log("CHECKING THIS:", req.query.playerName, counter);
+
+        counter++;
+        insertName(req, res, next);
+        //return next();
+    }
+
+    db.any("select * from players").then(function(info) {
+        res.locals.player1Name = (info[0] === undefined) ? "Not Ready" : info[0].name;
+        res.locals.player2Name = (info[1] === undefined) ? "Not Ready" : info[1].name;
+        res.locals.player3Name = (info[2] === undefined) ? "Not Ready" : info[2].name;
+        res.locals.player4Name = (info[3] === undefined) ? "Not Ready" : info[3].name;
+
+        return next();
+    });
+}
+
+function insertName(req, res, next) {
+    console.log(req.query.playerName);
+    db.none("insert into players(name)" + "values($1)", req.query.playerName).then(res.redirect("/"));
 }
 
 function resetImage() {
     db.none("truncate table giphyURL restart identity");
 }
+
+function resetNames() {
+    db.result("truncate players restart identity CASCADE");
+    counter = 1;
+}
+
+// db.any("select * from players").then(function(info) {
+//     console.log("ALL INFO:", info);
+
+//     // for (var i = 0; i < 4; i++) {
+//     //   if (info[i] === undefined) {
+//     //    getName(req, res, next, i);
+//     //         return this;
+//     //    }
+//     //  }
+
+
+//     return next();
+// }).catch((err) => {
+//     console.log(err);
+// });
+// }
 
 function createCaption(req, res) {
     req.body.age = parseInt(req.body.age);
@@ -67,6 +119,9 @@ function updateSomething(req, res) {
 module.exports = {
     getNewImage: getNewImage,
     resetImage: resetImage,
+
+    displayName: displayName,
+    resetNames: resetNames,
 
     createCaption: createCaption,
     getAllCaptions: getAllCaptions,

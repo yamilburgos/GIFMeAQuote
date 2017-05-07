@@ -2,9 +2,6 @@ var express = require("express");
 var router = express.Router();
 var db = require("../models/queries");
 
-// Figure out code to have the browser wait for other people after a button click for several pages.
-// >>> This will be for: Index, Entry, Vote & Results.
-
 // Then create a transition ejs page after entry to display all of the captions for a set amount
 // of time.
 
@@ -15,11 +12,19 @@ router.get("/", function(req, res) {
     res.render("index");
 });
 
-router.get("/entry", db.getNewImage, function(req, res) {
-    console.log("RETURNING", res.locals.gifUrl);
+router.get("/entry", db.getNewImage, db.displayName, function(req, res) {
+    console.log("URL:", res.locals.gifUrl);
+    console.log("P1 NAME:", res.locals.player1Name);
+    console.log("P2 NAME:", res.locals.player2Name);
+    console.log("P3 NAME:", res.locals.player3Name);
+    console.log("P4 NAME:", res.locals.player4Name);
 
     res.render("entry", {
-        gifUrl: res.locals.gifUrl
+        gifUrl: res.locals.gifUrl,
+        player1Name: res.locals.player1Name,
+        player2Name: res.locals.player2Name,
+        player3Name: res.locals.player3Name,
+        player4Name: res.locals.player4Name
     });
 });
 
@@ -29,6 +34,7 @@ router.get("/vote", function(req, res) {
 
 router.get("/results", function(req, res) {
     db.resetImage();
+    db.resetNames();
     res.render("results");
 });
 
