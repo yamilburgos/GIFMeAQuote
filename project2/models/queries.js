@@ -6,9 +6,14 @@ var axios = require("axios");
 var connectionString = process.env.DATABASE_URL;
 var db = pgp(connectionString);
 
-/* select * from players INNER JOIN status on (players.id = status.player_id); */
+var insertAuthorOnce = false;
+var insertCaptionOnce = false;
+var restartEverything = false;
 
 function grabNewGiphyImage(req, res, next) {
+    insertAuthorOnce = false;
+    insertCaptionOnce = false;
+
     axios.get("http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC")
         .then((response) => {
             db.none("insert into giphyURL(url)" + "select $1" + "where not exists (select 1 from giphyURL where id = 1)",
@@ -21,7 +26,7 @@ function grabNewGiphyImage(req, res, next) {
         });
 }
 
-function getNewImage(req, res, next) {
+function getImage(req, res, next) {
     db.any("select * from giphyURL where id = 1").then(function(info) {
         if (info[0] === undefined) {
             grabNewGiphyImage(req, res, next);
@@ -33,23 +38,7 @@ function getNewImage(req, res, next) {
     });
 }
 
-function getImage(req, res, next) {
-    db.any("select * from giphyURL where id = 1").then(function(info) {
-        res.locals.gifUrl = info[0].url;
-        return next();
-    });
-}
-
-function getQuote(req, res, next) {
-    db.any("SELECT a.name, c.sentence FROM author a LEFT JOIN caption c ON c.id = a.id").then(function(info) {
-        console.log("Let's go:", info);
-        res.locals.authorName = info[0].name;
-        res.locals.captionName = info[0].sentence;
-        return next();
-    });
-}
-
-function displayName(req, res, next) {
+function getName(req, res, next) {
     if (req.query.author === "" || req.query.author === undefined) {
         req.query.author = 'Anon';
     }
@@ -57,86 +46,59 @@ function displayName(req, res, next) {
     console.log("CHECKING THIS:", req.query.author);
     res.locals.authorName = req.query.author;
 
-    db.none("insert into author(name)" + "values($1)", req.query.author).then(function(data) {
-        console.log(data);
-        return next();
+    if (insertAuthorOnce === false) {
+        insertAuthorOnce = true;
+        db.none("insert into author(name)" + "values($1)", req.query.author);
+    }
+
+
+    res.render("entry", {
+        gifUrl: res.locals.gifUrl,
+        authorName: res.locals.authorName
     });
-    //  insertName(req, res, next);
-    //return next();
-    //  }
 
-    // db.any("select * from author").then(function(info) {
-    //     res.locals.authorName = (info[0] === undefined) ? "Not Ready" : info[0].name;
-    //     return next();
-    // });
+    //  return next();
 }
 
-function insertName(req, res, next) {
-    console.log(req.query.playerName);
-    db.none("insert into players(name)" + "values($1)", req.query.authorName).then(res.redirect("/"));
-}
-
-function resetImage() {
-    db.none("truncate table giphyURL restart identity");
-}
-
-function resetNames() {
-    db.result("truncate author, caption restart identity CASCADE");
-}
-
-function displayCaption(req, res, next) {
+function getCaption(req, res, next) {
     if (req.query.caption === "" || req.query.caption === undefined) {
         req.query.caption = 'Drawing a blank here';
     }
 
     console.log("CHECKING THIS:", req.query.caption);
 
-    db.none("insert into caption(sentence)" + "values($1)", req.query.caption).then(function(data) {
-        console.log(data);
-        return next();
-    });
+    if (insertCaptionOnce === false) {
+        insertCaptionOnce = true;
+        db.none("insert into caption(sentence)" + "values($1)", req.query.caption);
+    }
+
+    return next();
 }
 
-function callQuote(req, res) {
-    db.any("SELECT * FROM authors INNER JOIN caption ON (authors.id = caption.author_id)").then(function(info) {
+function getQuote(req, res, next) {
+    restartEverything = false;
 
-        console.log("INFO:", info);
-    });
+    db.any("SELECT a.name, c.sentence FROM author a LEFT JOIN caption c ON c.id = a.id")
+        .then(function(info) {
+            console.log("Let's go:", info);
+            res.locals.quoteList = info;
+            return next();
+        });
 }
 
-function createCaption(req, res) {
-    req.body.age = parseInt(req.body.age);
-    db.none("insert into contacts(first, last, age, sex)" +
-            "values(${first}, ${last}, ${age}, ${sex})", req.body)
-        .then(res.redirect("/"));
-}
-
-function getAllCaptions(req, res) {
-    db.any("select * from contacts").then(function(info) {
-        res.render("index", { title: "All Contacts", data: info });
-    });
-}
-
-function removeCaption(req, res) {
-    var contactID = parseInt(req.params.id);
-    console.log(contactID);
-    db.result("delete from contacts where id = $1", contactID);
-}
-
-function updateSomething(req, res) {
-    db.none("update contacts set first=$1 where id =$2", [req.body.first, parseInt(req.params.id)]);
+function resetAll() {
+    if (restartEverything === false) {
+        restartEverything = true;
+        db.none("truncate table giphyURL, author, caption restart identity");
+    }
 }
 
 module.exports = {
-    getNewImage: getNewImage,
-    resetImage: resetImage,
+    resetAll: resetAll,
 
     getImage: getImage,
-    getQuote: getQuote,
-    displayCaption: displayCaption,
+    getName: getName,
+    getCaption: getCaption,
 
-    displayName: displayName,
-    resetNames: resetNames,
-
-    callQuote: callQuote
+    getQuote: getQuote
 };

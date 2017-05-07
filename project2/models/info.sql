@@ -13,12 +13,6 @@ CREATE TABLE caption (
 	Sentence TEXT
 );
 
-CREATE TABLE quote (
-    ID SERIAL PRIMARY KEY,
-    Name TEXT,
-	Sentence TEXT
-);
-
 CREATE TABLE giphyURL (
 	ID SERIAL PRIMARY KEY,
 	Url TEXT
@@ -37,10 +31,3 @@ INSERT INTO caption(sentence)
     ('Pl 2'),
     ('Pl 3'),
     ('Pl 4');
-
-/*
-INSERT INTO quote (name, sentence)
-SELECT a.name, c.sentence
-FROM author a
-LEFT JOIN caption c ON c.id = a.id;
-*/
