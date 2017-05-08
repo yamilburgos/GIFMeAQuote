@@ -8,12 +8,6 @@ router.get("/", function(req, res) {
 });
 
 router.get("/entry", db.getImage, db.getName);
-
-router.get("/results", db.getImage, db.getCaption, db.getQuote, function(req, res) {
-    res.render("results", {
-        gifUrl: res.locals.gifUrl,
-        quoteList: res.locals.quoteList
-    });
-});
+router.get("/results", db.getImage, db.getCaption);
 
 module.exports = router;

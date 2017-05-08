@@ -11,9 +11,6 @@ var insertCaptionOnce = false;
 var restartEverything = false;
 
 function grabNewGiphyImage(req, res, next) {
-    insertAuthorOnce = false;
-    insertCaptionOnce = false;
-
     axios.get("http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC")
         .then((response) => {
             db.none("insert into giphyURL(url)" + "select $1" + "where not exists (select 1 from giphyURL where id = 1)",
@@ -44,20 +41,16 @@ function getName(req, res, next) {
     }
 
     console.log("CHECKING THIS:", req.query.author);
-    res.locals.authorName = req.query.author;
 
     if (insertAuthorOnce === false) {
         insertAuthorOnce = true;
         db.none("insert into author(name)" + "values($1)", req.query.author);
     }
 
-
     res.render("entry", {
         gifUrl: res.locals.gifUrl,
-        authorName: res.locals.authorName
+        authorName: req.query.author
     });
-
-    //  return next();
 }
 
 function getCaption(req, res, next) {
@@ -69,26 +62,26 @@ function getCaption(req, res, next) {
 
     if (insertCaptionOnce === false) {
         insertCaptionOnce = true;
-        db.none("insert into caption(sentence)" + "values($1)", req.query.caption);
-    }
+        db.none("insert into caption(sentence)" + "values($1)", req.query.caption).then(function() {
+            db.any("SELECT a.name, c.sentence FROM author a FULL JOIN caption c ON c.id = a.id")
+                .then(function(info) {
+                    console.log("Let's go:", info[0]);
+                    restartEverything = true;
 
-    return next();
-}
-
-function getQuote(req, res, next) {
-    restartEverything = false;
-
-    db.any("SELECT a.name, c.sentence FROM author a LEFT JOIN caption c ON c.id = a.id")
-        .then(function(info) {
-            console.log("Let's go:", info);
-            res.locals.quoteList = info;
-            return next();
+                    res.render("results", {
+                        gifUrl: res.locals.gifUrl,
+                        quoteList: info
+                    });
+                });
         });
+    }
 }
 
 function resetAll() {
-    if (restartEverything === false) {
-        restartEverything = true;
+    if (restartEverything === true) {
+        insertAuthorOnce = false;
+        insertCaptionOnce = false;
+        restartEverything = false;
         db.none("truncate table giphyURL, author, caption restart identity");
     }
 }
@@ -99,6 +92,4 @@ module.exports = {
     getImage: getImage,
     getName: getName,
     getCaption: getCaption,
-
-    getQuote: getQuote
 };

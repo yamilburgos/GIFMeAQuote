@@ -17,17 +17,3 @@ CREATE TABLE giphyURL (
 	ID SERIAL PRIMARY KEY,
 	Url TEXT
 );
-
-INSERT INTO author(name)
-	VALUES
-    ('Player 1'),
-    ('Player 2'),
-    ('Player 3'),
-    ('Player 4');
-
-INSERT INTO caption(sentence)
-	VALUES
-    ('Pl 1'),
-    ('Pl 2'),
-    ('Pl 3'),
-    ('Pl 4');

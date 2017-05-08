@@ -55,3 +55,15 @@ img {
 .mainMenu {
     height: 120px;
 }
+
+.captionText {
+    margin-top: 75px;
+    margin-bottom: 0px;
+    font-style: italic;
+    font-size: 42px;
+}
+
+.authorText {
+    font-style: italic;
+    font-size: 20px;
+}

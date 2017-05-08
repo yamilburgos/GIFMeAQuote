@@ -8,10 +8,10 @@
 
         <span class='mainMenu'>
             <form action="./">
-                <% for (var i = 0; i < quoteList.length; i++) { %>
-                    <p><%=quoteList[i].sentence %></p>
-                    <br> <p>by <%=quoteList[i].name %></p>
-                <% } %>
+                <!--<% for (var i = 0; i < quoteList.length; i++) { %>-->
+                    <p class="captionText">"<%=quoteList[0].sentence %>"</p>
+                    <p class="authorText">by <%=quoteList[0].name %></p>
+                <!--<% } %>-->
                 <br> <input type="submit" class="button" value="Start New Session"> 
             </form>
         </span>
