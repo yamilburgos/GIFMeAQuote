@@ -58,23 +58,24 @@ function getCaption(req, res, next) {
         req.query.caption = 'Drawing a blank here';
     }
 
+    var query = insertCaptionOnce === false ? "insert into caption(sentence)" + "values($1)" :
+        "update caption set sentence=$1 where id = 1";
+    insertCaptionOnce = true;
+
     console.log("CHECKING THIS:", req.query.caption);
 
-    if (insertCaptionOnce === false) {
-        insertCaptionOnce = true;
-        db.none("insert into caption(sentence)" + "values($1)", req.query.caption).then(function() {
-            db.any("SELECT a.name, c.sentence FROM author a FULL JOIN caption c ON c.id = a.id")
-                .then(function(info) {
-                    console.log("Let's go:", info[0]);
-                    restartEverything = true;
+    db.none(query, req.query.caption).then(function() {
+        db.any("SELECT a.name, c.sentence FROM author a FULL JOIN caption c ON c.id = a.id")
+            .then(function(info) {
+                console.log("Let's go:", info[0]);
+                restartEverything = true;
 
-                    res.render("results", {
-                        gifUrl: res.locals.gifUrl,
-                        quoteList: info
-                    });
+                res.render("results", {
+                    gifUrl: res.locals.gifUrl,
+                    quoteList: info
                 });
-        });
-    }
+            });
+    });
 }
 
 function resetAll() {
@@ -86,10 +87,16 @@ function resetAll() {
     }
 }
 
+function deleteAll(res, req, next) {
+    db.result('delete from author, caption' + "values($1, $2)", req.body);
+}
+
 module.exports = {
     resetAll: resetAll,
 
     getImage: getImage,
     getName: getName,
     getCaption: getCaption,
+
+    deleteAll: deleteAll
 };
