@@ -1,18 +1,16 @@
-# Project 2 GIF Me A Laugh
+# Project 2 GIF Me A Quote
 -----------------------
-A game where the player(s) add a caption to a randomly provided giphy image, funny or smart, to a giphy image.
+A website where the user adds a caption text to a randomly provided giphy image and rendering it on the screen.
 
 ## Wireframes
 ![alt text](https://git.generalassemb.ly/Yamil/Project-2/blob/master/wireframes.JPG)
 
 ## PsuedoCode
-* Enter a name before starting the game (else one is given by default).
-* Player must type in the textbox which will be saved as a string when submitted.
-* Player must then wait for all other Players to finish their submissions.
-* Player then get to see all of the captions one by one for a period of time.
-* Player can vote for their favorite caption of the bunch (can't vote for self).
-* Once votes are all assigned, show the round results with the vote points given out.
-* Player is finally given an option to either continue playing or start fresh (Keep part of the database entries or erase all of it).
+* Enter a name before starting the process (else one is given by default).
+* The viewer must type into the textbox which will be saved as a string when submitted.
+* If nothing is typed, a default message will be rendered instead.
+* The viewer will then get to see their captions onscreen with their name and a giphy image.
+* Finally there will be an option to start fresh which will clean up the database.
 
 ## Database Table
 
@@ -23,12 +21,12 @@ VOTES === INTEGER			</br>
 TOTAL === INTEGER			</br>
 POSTED === BOOLEAN			</br>
 
-| ID |  Name  | Caption                | Votes | Total | Posted |
-|:--:|:------:|:----------------------:|:-----:|:-----:|:------:|
-|  1 | John   | Batteries not included |   2   |   4   |  True  |
-|  2 | Nathan | I need an adult!       |   1   |   2   |  True  |
-|  3 | Cathy  | Shaken not stirred     |   0   |   1   |  True  |
-|  4 | Kris   | Come on Snake Eyes!    |   1   |   2   |  False |
+| ID |  Name  | Caption                | Posted |
+|:--:|:------:|:----------------------:|:------:|
+|  1 | John   | Batteries not included | True   |
+|  2 | Nathan | I need an adult!       | True   |
+|  3 | Cathy  | Shaken not stirred     | True   |
+|  4 | Kris   | Come on Snake Eyes!    | False  |
 
 ## User Stories
 * As a user I like to be able to hide my working caption from others.
