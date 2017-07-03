@@ -39,8 +39,6 @@ POSTED === BOOLEAN			</br>
 * As a user I like to see my points from voting this round and in total.
 * As a user I like to have the option to play again or start over.		
 
-Trello Board: https://trello.com/b/v8MvbDvM/gif-me-a-laugh
-
 ## Technologies used/npm Modules
 * HTML, CSS & Javascript - Building blocks used to create GIF Me A Lab using style and logic.
 
