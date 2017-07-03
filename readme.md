@@ -1,9 +1,11 @@
-# Project 2 GIF Me A Quote
------------------------
-A website where the user adds a caption text to a randomly provided giphy image and rendering it on the screen.
+# GIF Me A Quote
+> A website where the user adds a caption text to a randomly provided giphy image and rendering it on the screen.
+
+[![NPM Version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
 
 ## Wireframes
-![alt text](https://git.generalassemb.ly/Yamil/Project-2/blob/master/wireframes.JPG)
+![alt text](wireframes.JPG)
 
 ## PsuedoCode
 * Enter a name before starting the process (else one is given by default).
@@ -56,3 +58,19 @@ Trello Board: https://trello.com/b/v8MvbDvM/gif-me-a-laugh
 * Socket - Its a node.js realtime framework server.
 
 * Debug - Debug is a tiny node.js debugging utility modelled after node core's debugging technique.
+
+## Meta
+[Yamil Burgos](https://github.com/yamilburgos/) – yamil.burgos1293@gmail.com
+
+## Contributing
+1. Fork it (<https://github.com/yamilburgos/GIFMeAQuote/fork>)
+2. Create your feature branch (`git checkout -b feature/fooBar`)
+3. Commit your changes (`git commit -am 'Add some fooBar'`)
+4. Push to the branch (`git push origin feature/fooBar`)
+5. Create a new Pull Request
+
+<!-- Markdown link & img dfn's -->
+[npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/datadog-metrics
+[travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
