@@ -31,13 +31,9 @@ POSTED === BOOLEAN			</br>
 |  4 | Kris   | Come on Snake Eyes!    | False  |
 
 ## User Stories
-* As a user I like to be able to hide my working caption from others.
-* As a user I like to be able to see what player I am.
 * As a user I like to have a random image displayed everytime I play.
-* As a user I like the image to be the same for all 4 players.
-* As a user I like to not be able to vote for my own captions.
-* As a user I like to see my points from voting this round and in total.
-* As a user I like to have the option to play again or start over.		
+* As a user I like to not be able to write my own captions.
+* As a user I like to have the option to start over.		
 
 ## Technologies used/npm Modules
 * HTML, CSS & Javascript - Building blocks used to create GIF Me A Lab using style and logic.
