@@ -5,7 +5,7 @@
 [![Build Status][travis-image]][travis-url]
 
 ## Wireframes
-![alt text](wireframes.JPG)
+![alt text](images/wireframes.JPG)
 
 ## PsuedoCode
 * Enter a name before starting the process (else one is given by default).
@@ -33,7 +33,12 @@ POSTED === BOOLEAN			</br>
 ## User Stories
 * As a user I like to have a random image displayed everytime I play.
 * As a user I like to not be able to write my own captions.
-* As a user I like to have the option to start over.		
+* As a user I like to have the option to start over.
+
+## Project Images
+![alt text](images/demo1.png)
+![alt text](images/demo2.png)
+![alt text](images/demo3.png)
 
 ## Technologies used/npm Modules
 * HTML, CSS & Javascript - Building blocks used to create GIF Me A Lab using style and logic.
